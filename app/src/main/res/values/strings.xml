@@ -3,4 +3,12 @@
 
     <!--Empty string text-->
     <string name="empty_string">No inventory items loaded.</string>
+
+    <!--Empty string subtitle-->
+    <string name="empty_view_subtitle_text">Add products using the button below.</string>
+
+    <!-- Label for overview category of attributes in the editor [CHAR LIMIT=30] -->
+    <string name="category_overview">Overview</string>
+
+
 </resources>
