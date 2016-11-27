@@ -32,12 +32,14 @@
             tools:text="Price" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/sales"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_gravity="center_vertical"
-        android:text="Sell" />
+
+
+    <!--<Button-->
+        <!--android:id="@+id/sales"-->
+        <!--android:layout_width="64dp"-->
+        <!--android:layout_height="64dp"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:text="Sell" />-->
 
 
 </LinearLayout>
