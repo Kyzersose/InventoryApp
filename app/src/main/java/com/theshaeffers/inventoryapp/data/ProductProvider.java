@@ -11,21 +11,25 @@ import android.util.Log;
 
 import com.theshaeffers.inventoryapp.data.ProductContract.ProductEntry;
 
-import static android.R.attr.y;
-
 /**
  * Created by shaefferm on 11/24/2016.
  */
 
 public final class ProductProvider extends ContentProvider {
 
-    /** Tag for the log messages */
+    /**
+     * Tag for the log messages
+     */
     public static final String LOG_TAG = ProductProvider.class.getSimpleName();
 
-    /** URI matcher code for the content URI for the products table */
+    /**
+     * URI matcher code for the content URI for the products table
+     */
     private static final int PRODUCTS = 100;
 
-    /** URI matcher code for the content URI for a single product in the products table */
+    /**
+     * URI matcher code for the content URI for a single product in the products table
+     */
     private static final int PRODUCTS_ID = 101;
 
     /**
@@ -59,7 +63,9 @@ public final class ProductProvider extends ContentProvider {
                 "/#", PRODUCTS_ID);
     }
 
-    /** Database helper object */
+    /**
+     * Database helper object
+     */
     private ProductDbHelper mDbHelper;
 
     @Override
@@ -97,7 +103,7 @@ public final class ProductProvider extends ContentProvider {
                 // arguments that will fill in the "?". Since we have 1 question mark in the
                 // selection, we have 1 String in the selection arguments' String array.
                 selection = ProductEntry._ID + "=?";
-                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
 
                 // This will perform a query on the pets table where the _id equals 3 to return a
                 // Cursor containing that row of the table.
@@ -180,7 +186,7 @@ public final class ProductProvider extends ContentProvider {
                 // so we know which row to update. Selection will be "_id=?" and selection
                 // arguments will be a String array containing the actual ID.
                 selection = ProductEntry._ID + "=?";
-                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 return updateProduct(uri, contentValues, selection, selectionArgs);
             default:
                 throw new IllegalArgumentException("Update is not supported for " + uri);
@@ -261,7 +267,7 @@ public final class ProductProvider extends ContentProvider {
             case PRODUCTS_ID:
                 // Delete a single row given by the ID in the URI
                 selection = ProductEntry._ID + "=?";
-                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 rowsDeleted = database.delete(ProductEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             default:

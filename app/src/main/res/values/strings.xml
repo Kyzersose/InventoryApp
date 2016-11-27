@@ -3,12 +3,38 @@
 
     <!--Empty string text-->
     <string name="empty_string">No inventory items loaded.</string>
-
+    
     <!--Empty string subtitle-->
-    <string name="empty_view_subtitle_text">Add products using the button below.</string>
+    <string name="empty_string_subtitle">Add a product with the button below.</string>
+
+    <!-- Label for product name attributes in the editor [CHAR LIMIT=30] -->
+    <string name="product_name">Product Name:</string>
+
+    <!--Product name hint-->
+    <string name="product_name_hint">Type the product name here</string>
 
     <!-- Label for overview category of attributes in the editor [CHAR LIMIT=30] -->
-    <string name="category_overview">Overview</string>
+    <string name="product_price">Product Price:</string>
 
+    <!--Product price hint-->
+    <string name="product_price_hint">Input the product price here</string>
+
+    <string name="order_more">Quick Order</string>
+
+    <string name="product_quantity">In-Stock</string>
+
+    <string name="sell">Sell</string>
+
+    <string name="bulk_order">Bulk Order</string>
+
+    <string name="action_delete">Delete Product</string>
+
+    <string name="action_save">Save</string>
+
+    <string name="action_insert_dummy_data">Insert Dummy Data</string>
+
+    <string name="action_delete_all_entries">Delete all entries</string>
+
+    <string name="list_in_stock">In Stock: </string>
 
 </resources>

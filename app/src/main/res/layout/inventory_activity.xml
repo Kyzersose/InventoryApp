@@ -34,7 +34,7 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="sans-serif"
             android:paddingTop="8dp"
-            android:text="@string/empty_view_subtitle_text"
+            android:text="@string/empty_string_subtitle"
             android:textAppearance="?android:textAppearanceSmall"
             android:textColor="#A2AAB0"/>
 

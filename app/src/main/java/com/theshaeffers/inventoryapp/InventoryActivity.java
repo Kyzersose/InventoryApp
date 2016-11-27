@@ -2,14 +2,24 @@ package com.theshaeffers.inventoryapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.FloatingActionButton;
 import android.view.Menu;
 import android.view.View;
+import android.app.LoaderManager;
+import com.theshaeffers.inventoryapp.data.ProductContract.ProductEntry;
 
 
-public class InventoryActivity extends AppCompatActivity {
+public class InventoryActivity extends AppCompatActivity implements
+        LoaderManager.LoaderCallbacks<Cursor> {
+
+    /** Identifier for the product data loader */
+    private static final int PRODUCT_LOADER = 0;
+
+    /** Adapter for the ListView */
+    ProductCursorAdapter mCursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
