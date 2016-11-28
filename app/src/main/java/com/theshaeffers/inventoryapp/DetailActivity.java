@@ -98,6 +98,9 @@ public class DetailActivity extends AppCompatActivity implements
         // If the intent DOES NOT contain a product content URI, then we know that we are
         // creating a new product.
         if (mCurrentProductUri == null) {
+            /**
+             * New Product Detail Activity
+             */
             // This is a new product, so change the app bar to say "Add a Product"
             setTitle(getString(R.string.editor_activity_title_new_product));
 
@@ -109,37 +112,78 @@ public class DetailActivity extends AppCompatActivity implements
             mSell.setVisibility(View.GONE);
             mBulkOrder.setVisibility(View.GONE);
 
+            //Find the views the user WILL edit
+            //Find the views the user can edit
+            mNameEditText = (EditText) findViewById(R.id.edit_product_name);
+            mPriceEditText = (EditText) findViewById(R.id.edit_product_price);
+            mQuantityEditText = (EditText) findViewById(R.id.edit_product_quantity);
+
+            //Set the onClickListeners
+            mNameEditText.setOnTouchListener(mTouchListener);
+            mPriceEditText.setOnTouchListener(mTouchListener);
+            mQuantityEditText.setOnTouchListener(mTouchListener);
+
             // Invalidate the options menu, so the "Delete" menu option can be hidden.
             // (It doesn't make sense to delete a product that hasn't been created yet.)
             invalidateOptionsMenu();
         } else {
+            /**
+             * Existing Product Detail Activity
+             */
             // Otherwise this is an existing product, so change app bar to say "Edit product"
             setTitle(getString(R.string.editor_activity_title_edit_product));
+
+            //Find the views the user can edit
+            mNameEditText = (EditText) findViewById(R.id.edit_product_name);
+            mPriceEditText = (EditText) findViewById(R.id.edit_product_price);
+            mQuantityEditText = (EditText) findViewById(R.id.edit_product_quantity);
+            mQuickOrder = (TextView) findViewById(R.id.quick_order_view);
+            mSell = (TextView) findViewById(R.id.sell_view);
+            mBulkOrder = (TextView) findViewById(R.id.bulk_order_view);
+
+            // Setup OnTouchListeners on all the input fields, so we can determine if the user
+            // has touched or modified them. This will let us know if there are unsaved changes
+            // or not, if the user tries to leave the editor without saving.
+            mNameEditText.setOnTouchListener(mTouchListener);
+            mPriceEditText.setOnTouchListener(mTouchListener);
+            mQuantityEditText.setOnTouchListener(mTouchListener);
+            mQuickOrder.setOnTouchListener(mTouchListener);
+            mSell.setOnTouchListener(mTouchListener);
+            mBulkOrder.setOnTouchListener(mTouchListener);
 
             // Initialize a loader to read the product data from the database
             // and display the current values in the editor
             getLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, this);
+
+            mQuickOrder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(DetailActivity.this, "You pressed Quick View", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            mSell.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(DetailActivity.this, "You pressed Sell", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            mBulkOrder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent bulkIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",
+                            "Sebastian@UdacityMegaSuppliers.com", null));
+                    bulkIntent.putExtra(Intent.EXTRA_SUBJECT, "Bulk order");
+                    bulkIntent.putExtra(Intent.EXTRA_TEXT, "Please order our standard bulk" +
+                            " shipment of: \n\n" + mNameEditText.getText().toString() +
+                            "\n\n Thanks,\n\nSuper Genius");
+                    if (bulkIntent.resolveActivity(getPackageManager()) !=null) {
+                        startActivity(bulkIntent);
+                    }
+                }
+            });
         }
-
-        //Find the views the user can edit
-        mNameEditText = (EditText) findViewById(R.id.edit_product_name);
-        mPriceEditText = (EditText) findViewById(R.id.edit_product_price);
-        mQuantityEditText = (EditText) findViewById(R.id.edit_product_quantity);
-        mQuickOrder = (TextView) findViewById(R.id.quick_order_view);
-        mSell = (TextView) findViewById(R.id.sell_view);
-        mBulkOrder = (TextView) findViewById(R.id.bulk_order_view);
-
-        // Setup OnTouchListeners on all the input fields, so we can determine if the user
-        // has touched or modified them. This will let us know if there are unsaved changes
-        // or not, if the user tries to leave the editor without saving.
-        mNameEditText.setOnTouchListener(mTouchListener);
-        mPriceEditText.setOnTouchListener(mTouchListener);
-        mQuantityEditText.setOnTouchListener(mTouchListener);
-        mQuickOrder.setOnTouchListener(mTouchListener);
-        mSell.setOnTouchListener(mTouchListener);
-        mBulkOrder.setOnTouchListener(mTouchListener);
-
-
 
     }
 
