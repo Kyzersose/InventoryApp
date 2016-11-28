@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.content.Loader;
 import android.app.LoaderManager;
@@ -116,6 +117,22 @@ public class DetailActivity extends AppCompatActivity implements
         mSell.setOnTouchListener(mTouchListener);
         mBulkOrder.setOnTouchListener(mTouchListener);
 
+    }
+
+    //Grab input from user
+    private void saveProduct(){
+        //Read the input from the fields and trim them
+        String nameString = mNameEditText.getText().toString().trim();
+        String priceString = mPriceEditText.getText().toString().trim();
+
+        //Check if it's really a new product. Check if any fields are null.
+        if (mCurrentProductUri == null && TextUtils.isEmpty(nameString) &&
+                    TextUtils.isEmpty(priceString)){
+            //No fields were changed, no need to update the name or price fields
+            return;
+        }
+
+        
     }
 
     @Override
