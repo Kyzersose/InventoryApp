@@ -75,13 +75,12 @@
                 android:text="@string/product_quantity" />
 
             <!-- Quantity field -->
-            <TextView
+            <EditText
                 android:id="@+id/edit_product_quantity"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:fontFamily="sans-serif_light"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:paddingLeft="24dp"
+                style="@style/EditorFieldStyle"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="40dp"
+                android:hint="@string/product_quantity_hint"
                 tools:text="5"/>
 
         </LinearLayout>

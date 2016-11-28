@@ -19,6 +19,9 @@
     <!--Product price hint-->
     <string name="product_price_hint">Input the product price here</string>
 
+    <!--Product quantity hint-->
+    <string name="product_quantity_hint">Input the initial quantity</string>
+
     <string name="order_more">Quick Order</string>
 
     <string name="product_quantity">In-Stock</string>
@@ -38,5 +41,29 @@
     <string name="editor_activity_title_new_product">Add a new product</string>
 
     <string name="editor_activity_title_edit_product">Edit product</string>
+
+    <string name="editor_insert_product_failed">Product failed to insert.</string>
+
+    <string name="editor_insert_product_successful">Product successfully added.</string>
+
+    <string name="editor_update_product_failed">Product update failed.</string>
+
+    <string name="editor_update_product_successful">Product update successful.</string>
+
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+
+    <string name="discard">Discard</string>
+
+    <string name="keep_editing">Keep Editing</string>
+
+    <string name="delete_dialog_msg">Delete this pet?</string>
+
+    <string name="delete">Delete</string>
+
+    <string name="cancel">Cancel</string>
+
+    <string name="editor_delete_product_failed">Error with deleting product</string>
+
+    <string name="editor_delete_product_successful">Product deleted</string>
 
 </resources>
