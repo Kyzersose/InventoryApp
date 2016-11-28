@@ -32,14 +32,11 @@
             tools:text="Price" />
     </LinearLayout>
 
-
-
-    <!--<Button-->
+    <!--<ImageButton-->
         <!--android:id="@+id/sales"-->
         <!--android:layout_width="64dp"-->
         <!--android:layout_height="64dp"-->
-        <!--android:layout_gravity="center_vertical"-->
-        <!--android:text="Sell" />-->
+        <!--android:src="@drawable/ic_shopping_cart_black_48dp" />-->
 
 
 </LinearLayout>

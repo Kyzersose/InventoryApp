@@ -11,25 +11,20 @@ import android.util.Log;
 
 import com.theshaeffers.inventoryapp.data.ProductContract.ProductEntry;
 
+
 /**
  * Created by shaefferm on 11/24/2016.
  */
 
 public final class ProductProvider extends ContentProvider {
 
-    /**
-     * Tag for the log messages
-     */
+    // Tag for log messages
     public static final String LOG_TAG = ProductProvider.class.getSimpleName();
 
-    /**
-     * URI matcher code for the content URI for the products table
-     */
+    //URI matcher code for the content URI for the products table
     private static final int PRODUCTS = 100;
 
-    /**
-     * URI matcher code for the content URI for a single product in the products table
-     */
+    //URI matcher code for the content URI for a single product in the products table
     private static final int PRODUCTS_ID = 101;
 
     /**
@@ -41,24 +36,10 @@ public final class ProductProvider extends ContentProvider {
 
     // Static initializer. This is run the first time anything is called from this class.
     static {
-        // The calls to addURI() go here, for all of the content URI patterns that the provider
-        // should recognize. All paths added to the UriMatcher have a corresponding code to return
-        // when a match is found.
 
-        // The content URI of the form "content://com.theshaeffers.inventoryapp/products" will
-        // map to the integer code {@link #PRODUCTS}. This URI is used to provide access to MULTIPLE
-        // rows of the products table.
         sUriMatcher.addURI(ProductContract.CONTENT_AUTHORITY, ProductContract.PATH_PRODUCTS,
                 PRODUCTS);
 
-        // The content URI of the form "content://com.theshaeffers.inventoryapp/products/#"
-        // will map to the integer code {@link #PET_ID}. This URI is used to provide access to
-        // ONE single row of the products table.
-        //
-        // In this case, the "#" wildcard is used where "#" can be substituted for an integer.
-        // For example, "content://com.theshaeffers.inventoryapp/products/3" matches, but
-        // "content://com.theshaeffers.inventoryapp/products/" (without a number at the end)
-        // doesn't match.
         sUriMatcher.addURI(ProductContract.CONTENT_AUTHORITY, ProductContract.PATH_PRODUCTS +
                 "/#", PRODUCTS_ID);
     }
@@ -150,7 +131,7 @@ public final class ProductProvider extends ContentProvider {
         // Check the quantity
         // Make sure it can't get below 0
         Integer quantity = values.getAsInteger(ProductEntry.COLUMN_PRODUCT_QUANTITY);
-        if (quantity != null || quantity < 0) {
+        if (quantity == null || quantity < 0) {
             throw new IllegalArgumentException("Product requires a valid quantity");
         }
 

@@ -11,23 +11,23 @@
         <activity android:name=".InventoryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".DetailActivity">
+            android:theme"@style/EditorTheme"
             android:parentActivityName=".InventoryActivity" >
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".InventoryActivity" />
         </activity>
+
+        <provider
+            android:name="com.theshaeffers.inventoryapp.data.ProductProvider"
+            android:authorities="com.theshaeffers.inventoryapp"
+            android:exported="false" />
+
     </application>
-    <provider
-        android:name=".data.ProductProvider"
-        android:authorities="com.theshaeffers.inventoryapp.products"
-        android:exported="false" />
-    <uses-feature android:name="android.hardware.camera"
-        android:required="true" />
 
 </manifest>

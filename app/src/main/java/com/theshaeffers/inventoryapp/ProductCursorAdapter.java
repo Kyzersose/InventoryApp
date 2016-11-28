@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
+
 import com.theshaeffers.inventoryapp.data.ProductContract.ProductEntry;
 
 /**
@@ -23,6 +24,7 @@ public class ProductCursorAdapter extends CursorAdapter {
      * @param context
      * @param c
      */
+
     public ProductCursorAdapter(Context context, Cursor c) {
         super(context, c, 0 /* flags */);
     }
@@ -57,11 +59,15 @@ public class ProductCursorAdapter extends CursorAdapter {
         String productName = cursor.getString(nameColumnIndex);
         int productQuantity = cursor.getInt(quantityColumnIndex);
         int productPrice = cursor.getInt(priceColumnIndex);
+        String productQuantityString = "In-Stock : " + productQuantity;
+        String productPriceString = "" + productPrice;
+
+
 
         //Set the attributes to their textviews
         productNameView.setText(productName);
-        productInStockView.setText(R.string.list_in_stock + productQuantity);
-        productItemPriceView.setText(productPrice);
+        productInStockView.setText(productQuantityString);
+        productItemPriceView.setText(productPriceString);
 
     }
 }

@@ -35,6 +35,8 @@
 
     <string name="action_delete_all_entries">Delete all entries</string>
 
-    <string name="list_in_stock">In Stock: </string>
+    <string name="editor_activity_title_new_product">Add a new product</string>
+
+    <string name="editor_activity_title_edit_product">Edit product</string>
 
 </resources>
