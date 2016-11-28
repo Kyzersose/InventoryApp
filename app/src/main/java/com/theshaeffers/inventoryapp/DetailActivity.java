@@ -8,8 +8,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -18,6 +21,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,9 +38,19 @@ public class DetailActivity extends AppCompatActivity implements
     private static final int EXISTING_PRODUCT_LOADER = 0;
 
     /**
+     * Identifier for the image capture
+     */
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+
+    /**
      * Content URI for the existing product (null if it's a new product)
      */
     private Uri mCurrentProductUri;
+
+    /**
+     * ImageButton for the product image
+     */
+    private ImageButton mProductPicture;
 
     /**
      * EditText field to enter the product name
@@ -158,14 +172,23 @@ public class DetailActivity extends AppCompatActivity implements
             mQuickOrder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(DetailActivity.this, "You pressed Quick View", Toast.LENGTH_SHORT).show();
+                    int currentQuantity = Integer.parseInt(mQuantityEditText.getText().toString());
+                    currentQuantity++;
+                    mQuantityEditText.setText("" + currentQuantity);
                 }
             });
 
             mSell.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(DetailActivity.this, "You pressed Sell", Toast.LENGTH_SHORT).show();
+                    int currentQuantity = Integer.parseInt(mQuantityEditText.getText().toString());
+                    if (currentQuantity <= 1) {
+                        Toast.makeText(DetailActivity.this, "Inventory running low, order more.",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        currentQuantity--;
+                        mQuantityEditText.setText("" + currentQuantity);
+                    }
                 }
             });
 
@@ -178,14 +201,44 @@ public class DetailActivity extends AppCompatActivity implements
                     bulkIntent.putExtra(Intent.EXTRA_TEXT, "Please order our standard bulk" +
                             " shipment of: \n\n" + mNameEditText.getText().toString() +
                             "\n\n Thanks,\n\nSuper Genius");
-                    if (bulkIntent.resolveActivity(getPackageManager()) !=null) {
+                    if (bulkIntent.resolveActivity(getPackageManager()) != null) {
                         startActivity(bulkIntent);
                     }
                 }
             });
+
+
+        }
+        // Find the image button view
+        mProductPicture = (ImageButton) findViewById(R.id.imageButton);
+        mProductPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dispatchTakePictureIntent();
+            }
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            mProductPicture.setImageBitmap(imageBitmap);
+        }
+    }
+
+    //Picture taker method
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
 
     }
+
+
 
     //Grab input from user
     private void saveProduct() {
@@ -193,6 +246,7 @@ public class DetailActivity extends AppCompatActivity implements
         String nameString = mNameEditText.getText().toString().trim();
         String priceString = mPriceEditText.getText().toString().trim();
         String quantityString = mQuantityEditText.getText().toString().trim();
+        Bitmap bitmap = ((BitmapDrawable)mProductPicture.getDrawable()).getBitmap();
 
         //Check if it's really a new product. Check if any fields are null.
         if (mCurrentProductUri == null && TextUtils.isEmpty(nameString) &&

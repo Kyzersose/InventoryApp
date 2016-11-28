@@ -62,7 +62,7 @@ public class ProductCursorAdapter extends CursorAdapter {
         int productQuantity = cursor.getInt(quantityColumnIndex);
         int productPrice = cursor.getInt(priceColumnIndex);
         String productQuantityString = "In-Stock : " + productQuantity;
-        String productPriceString = "" + productPrice;
+        String productPriceString = "Price: $" + productPrice;
 
 
         //Set the attributes to their textviews
