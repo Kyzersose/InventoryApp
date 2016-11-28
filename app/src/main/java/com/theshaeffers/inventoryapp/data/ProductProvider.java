@@ -86,7 +86,7 @@ public final class ProductProvider extends ContentProvider {
                 selection = ProductEntry._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
 
-                // This will perform a query on the pets table where the _id equals 3 to return a
+                // This will perform a query on the products table where the _id equals 3 to return a
                 // Cursor containing that row of the table.
                 cursor = database.query(ProductEntry.TABLE_NAME, projection, selection,
                         selectionArgs, null, null, sortOrder);
@@ -148,7 +148,7 @@ public final class ProductProvider extends ContentProvider {
             return null;
         }
 
-        // Notify all listeners that the data has changed for the pet content URI
+        // Notify all listeners that the data has changed for the product content URI
         getContext().getContentResolver().notifyChange(uri, null);
 
         // Return the new URI with the ID (of the newly inserted row) appended at the end
@@ -163,7 +163,7 @@ public final class ProductProvider extends ContentProvider {
             case PRODUCTS:
                 return updateProduct(uri, contentValues, selection, selectionArgs);
             case PRODUCTS_ID:
-                // For the PET_ID code, extract out the ID from the URI,
+                // For the PRODUCT_ID code, extract out the ID from the URI,
                 // so we know which row to update. Selection will be "_id=?" and selection
                 // arguments will be a String array containing the actual ID.
                 selection = ProductEntry._ID + "=?";
@@ -198,11 +198,11 @@ public final class ProductProvider extends ContentProvider {
             }
         }
 
-        // If the {@link PetEntry#COLUMN_PRODUCT_QUANTITY} key is present,
+        // If the {@link PeProductEntry#COLUMN_PRODUCT_QUANTITY} key is present,
         // check that the weight value is valid.
         if (values.containsKey(ProductEntry.COLUMN_PRODUCT_QUANTITY)) {
             Integer quantity = values.getAsInteger(ProductEntry.COLUMN_PRODUCT_QUANTITY);
-            if (quantity != null || quantity < 0) {
+            if (quantity == null || quantity < 0) {
                 throw new IllegalArgumentException("Product requires a valid quantity");
             }
         }

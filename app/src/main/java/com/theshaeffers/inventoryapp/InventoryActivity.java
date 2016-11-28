@@ -20,10 +20,6 @@ import android.widget.ListView;
 
 import com.theshaeffers.inventoryapp.data.ProductContract.ProductEntry;
 
-import static android.R.attr.excludeId;
-import static android.R.attr.id;
-import static android.R.attr.start;
-
 
 public class InventoryActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
@@ -95,7 +91,7 @@ public class InventoryActivity extends AppCompatActivity implements
      */
     private void insertProduct() {
         // Create a ContentValues object where column names are the keys,
-        // and Toto's pet attributes are the values.
+        // and Google Pixel attributes are the values.
         ContentValues values = new ContentValues();
         values.put(ProductEntry.COLUMN_PRODUCT_NAME, "Google Pixel");
         values.put(ProductEntry.COLUMN_PRODUCT_PRICE, 649);

@@ -13,7 +13,7 @@ import com.theshaeffers.inventoryapp.data.ProductContract.ProductEntry;
 
 /**
  * Created by shaefferm on 11/26/2016.
- *
+ * <p>
  * Adapter for the list that uses a Cursor of product data as its source.
  */
 
@@ -21,6 +21,7 @@ public class ProductCursorAdapter extends CursorAdapter {
 
     /**
      * Constructs a new ProductCursorAdapter
+     *
      * @param context
      * @param c
      */
@@ -31,6 +32,7 @@ public class ProductCursorAdapter extends CursorAdapter {
 
     /**
      * Creates a new list with NO DATA
+     *
      * @param context
      * @param cursor
      * @param parent
@@ -61,7 +63,6 @@ public class ProductCursorAdapter extends CursorAdapter {
         int productPrice = cursor.getInt(priceColumnIndex);
         String productQuantityString = "In-Stock : " + productQuantity;
         String productPriceString = "" + productPrice;
-
 
 
         //Set the attributes to their textviews

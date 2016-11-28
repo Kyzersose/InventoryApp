@@ -35,8 +35,8 @@ public final class ProductContract {
     public static final String PATH_PRODUCTS = "products";
 
     /**
-     * Inner class that defines constant values for the pets database table.
-     * Each entry in the table represents a single pet.
+     * Inner class that defines constant values for the products database table.
+     * Each entry in the table represents a single product.
      */
     public static final class ProductEntry implements BaseColumns {
 

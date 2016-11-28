@@ -101,6 +101,14 @@ public class DetailActivity extends AppCompatActivity implements
             // This is a new product, so change the app bar to say "Add a Product"
             setTitle(getString(R.string.editor_activity_title_new_product));
 
+            //This is a new product, so the user will not need the Bulk Order, Sell, or Quick Order
+            mQuickOrder = (TextView) findViewById(R.id.quick_order_view);
+            mSell = (TextView) findViewById(R.id.sell_view);
+            mBulkOrder = (TextView) findViewById(R.id.bulk_order_view);
+            mQuickOrder.setVisibility(View.GONE);
+            mSell.setVisibility(View.GONE);
+            mBulkOrder.setVisibility(View.GONE);
+
             // Invalidate the options menu, so the "Delete" menu option can be hidden.
             // (It doesn't make sense to delete a product that hasn't been created yet.)
             invalidateOptionsMenu();
@@ -130,6 +138,8 @@ public class DetailActivity extends AppCompatActivity implements
         mQuickOrder.setOnTouchListener(mTouchListener);
         mSell.setOnTouchListener(mTouchListener);
         mBulkOrder.setOnTouchListener(mTouchListener);
+
+
 
     }
 
@@ -205,7 +215,7 @@ public class DetailActivity extends AppCompatActivity implements
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        // If this is a new pet, hide the "Delete" menu item.
+        // If this is a new product, hide the "Delete" menu item.
         if (mCurrentProductUri == null) {
             MenuItem menuItem = menu.findItem(R.id.action_delete);
             menuItem.setVisible(false);
