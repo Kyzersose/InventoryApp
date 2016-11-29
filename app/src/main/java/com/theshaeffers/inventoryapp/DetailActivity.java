@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -26,6 +28,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.theshaeffers.inventoryapp.data.ProductContract.ProductEntry;
+
+import java.io.ByteArrayOutputStream;
+
+import static android.R.attr.bitmap;
+import static android.R.drawable.ic_menu_camera;
 
 // Activity used by user to create a new product or edit an existing one
 
@@ -81,6 +88,21 @@ public class DetailActivity extends AppCompatActivity implements
      * TextView used to make an intent to an email to a supplier, passing intent
      */
     private TextView mBulkOrder;
+
+    /**
+     * Used to track if a picture has been taken
+     */
+    private boolean mImageTaken;
+
+    /**
+     * Bitmap used to track the image across methods
+     */
+    Bitmap bitmap;
+
+    /**
+     * byte used to store bitmap when converting and storing in the db
+     */
+    byte[] bytes;
 
     /**
      * Boolean flag that keeps track of whether the product has been edited
@@ -226,6 +248,7 @@ public class DetailActivity extends AppCompatActivity implements
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             mProductPicture.setImageBitmap(imageBitmap);
+            mImageTaken = true;
         }
     }
 
@@ -238,7 +261,17 @@ public class DetailActivity extends AppCompatActivity implements
 
     }
 
+    // convert from bitmap to byte array
+    public static byte[] getBytes(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
+        return stream.toByteArray();
+    }
 
+    // convert from byte array to bitmap
+    public static Bitmap getImage(byte[] image) {
+        return BitmapFactory.decodeByteArray(image, 0, image.length);
+    }
 
     //Grab input from user
     private void saveProduct() {
@@ -246,7 +279,12 @@ public class DetailActivity extends AppCompatActivity implements
         String nameString = mNameEditText.getText().toString().trim();
         String priceString = mPriceEditText.getText().toString().trim();
         String quantityString = mQuantityEditText.getText().toString().trim();
-        Bitmap bitmap = ((BitmapDrawable)mProductPicture.getDrawable()).getBitmap();
+
+        //Check if an image has been taken
+        if (mImageTaken) {
+            bitmap = ((BitmapDrawable)mProductPicture.getDrawable()).getBitmap();
+            bytes = getBytes(bitmap);
+        }
 
         //Check if it's really a new product. Check if any fields are null.
         if (mCurrentProductUri == null && TextUtils.isEmpty(nameString) &&
@@ -260,6 +298,9 @@ public class DetailActivity extends AppCompatActivity implements
         values.put(ProductEntry.COLUMN_PRODUCT_NAME, nameString);
         values.put(ProductEntry.COLUMN_PRODUCT_PRICE, priceString);
         values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, quantityString);
+        if (mImageTaken) {
+            values.put(ProductEntry.COLUMN_PRODUCT_IMAGE, bytes);
+        }
 
         //Determine if this is a new or existing product, check if mCurrentProduct is null
         if (mCurrentProductUri == null) {
@@ -515,12 +556,15 @@ public class DetailActivity extends AppCompatActivity implements
             String name = cursor.getString(nameColumnIndex);
             int price = cursor.getInt(priceColumnIndex);
             int quantity = cursor.getInt(quantityColumnIndex);
-            //TODO code to pull the image from the DB if it exists
+            byte[] pictureByte = cursor.getBlob(imageColumnIndex);
 
             //Update the views with the new info
             mNameEditText.setText(name);
             mPriceEditText.setText(Integer.toString(price));
             mQuantityEditText.setText(Integer.toString(quantity));
+            if (pictureByte != null) {
+                mProductPicture.setImageBitmap(getImage(pictureByte));
+            }
         }
     }
 
