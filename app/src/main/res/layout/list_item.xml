@@ -4,15 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/parent_margin"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="horizontal">
 
     <LinearLayout
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp">
 
         <TextView
             android:id="@+id/list_item_name"
@@ -31,14 +32,18 @@
             android:id="@+id/list_item_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Price" />
+            tools:text="Price: " />
+
     </LinearLayout>
 
-    <!--<ImageButton-->
-        <!--android:id="@+id/sales"-->
-        <!--android:layout_width="64dp"-->
-        <!--android:layout_height="64dp"-->
-        <!--android:src="@drawable/ic_shopping_cart_black_48dp" />-->
+    <ImageButton
+        android:id="@+id/salesListButton"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_margin="8dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:src="@drawable/ic_shopping_cart_black_48dp" />
 
 
 </LinearLayout>

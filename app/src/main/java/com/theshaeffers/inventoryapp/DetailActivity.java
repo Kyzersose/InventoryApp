@@ -17,7 +17,6 @@ import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -30,9 +29,6 @@ import android.widget.Toast;
 import com.theshaeffers.inventoryapp.data.ProductContract.ProductEntry;
 
 import java.io.ByteArrayOutputStream;
-
-import static android.R.attr.bitmap;
-import static android.R.drawable.ic_menu_camera;
 
 // Activity used by user to create a new product or edit an existing one
 
@@ -191,6 +187,7 @@ public class DetailActivity extends AppCompatActivity implements
             // and display the current values in the editor
             getLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, this);
 
+            //ClickListener for Quick Order, increments quantity
             mQuickOrder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -200,6 +197,7 @@ public class DetailActivity extends AppCompatActivity implements
                 }
             });
 
+            //ClickListener for Sell button, decrements quantity
             mSell.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -214,6 +212,8 @@ public class DetailActivity extends AppCompatActivity implements
                 }
             });
 
+            //ClickListener for Bulk Order
+            //Sends an email populated with product name
             mBulkOrder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -242,6 +242,8 @@ public class DetailActivity extends AppCompatActivity implements
 
     }
 
+    //This is called when the camera returns to the DetailActivity
+    //Sets the Bitmap recieved as the ImageButton drawable.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -282,7 +284,7 @@ public class DetailActivity extends AppCompatActivity implements
 
         //Check if an image has been taken
         if (mImageTaken) {
-            bitmap = ((BitmapDrawable)mProductPicture.getDrawable()).getBitmap();
+            bitmap = ((BitmapDrawable) mProductPicture.getDrawable()).getBitmap();
             bytes = getBytes(bitmap);
         }
 
@@ -347,10 +349,7 @@ public class DetailActivity extends AppCompatActivity implements
         return true;
     }
 
-    /**
-     * This method is called after invalidateOptionsMenu(), so that the
-     * menu can be updated (some menu items can be hidden or made visible).
-     */
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
@@ -381,7 +380,6 @@ public class DetailActivity extends AppCompatActivity implements
             // Respond to a click on the "Up" arrow button in the app bar
             case android.R.id.home:
                 // If the product hasn't changed, continue with navigating up to parent activity
-                // which is the {@link InventoryActivity}.
                 if (!mProductHasChanged) {
                     NavUtils.navigateUpFromSameTask(DetailActivity.this);
                     return true;

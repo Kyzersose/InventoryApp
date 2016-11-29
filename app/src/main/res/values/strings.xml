@@ -66,4 +66,6 @@
 
     <string name="editor_delete_product_successful">Product deleted</string>
 
+    <string name="out_of_stock">Product out of stock.</string>
+
 </resources>

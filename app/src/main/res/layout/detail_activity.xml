@@ -18,8 +18,8 @@
 
         <ImageButton
             android:id="@+id/imageButton"
-            android:layout_width="240dp"
-            android:layout_height="240dp"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
             android:layout_gravity="center"
             app:srcCompat="@android:drawable/ic_menu_camera" />
 
