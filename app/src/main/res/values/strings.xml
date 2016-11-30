@@ -26,6 +26,9 @@
 
     <string name="product_quantity">In-Stock</string>
 
+    <string name="missing_info">Product name, quantity, and price are required.
+        Please try again.</string>
+
     <string name="sell">Sell</string>
 
     <string name="bulk_order">Bulk Order</string>

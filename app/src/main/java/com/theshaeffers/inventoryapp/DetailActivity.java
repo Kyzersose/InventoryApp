@@ -288,6 +288,13 @@ public class DetailActivity extends AppCompatActivity implements
             bytes = getBytes(bitmap);
         }
 
+        //Check if any fields are empty
+        if (TextUtils.isEmpty(nameString) ||
+                TextUtils.isEmpty(priceString) || TextUtils.isEmpty(quantityString)){
+            Toast.makeText(this, R.string.missing_info , Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         //Check if it's really a new product. Check if any fields are null.
         if (mCurrentProductUri == null && TextUtils.isEmpty(nameString) &&
                 TextUtils.isEmpty(priceString) && TextUtils.isEmpty(quantityString)) {
